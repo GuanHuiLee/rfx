@@ -1,16 +1,11 @@
 <?php
 
 namespace app\controller\admin;
-require 'vendor/autoload.php';
 
-use app\controller\common\Base;
 use think\Request;
-use JPush\Client as JPush;
 
-class MessagePush extends Base
+class Appointment
 {
-    protected $excludeValidateCheck = ['save'];
-
     /**
      * 显示资源列表
      *
@@ -18,15 +13,7 @@ class MessagePush extends Base
      */
     public function index()
     {
-        $user_id = request()->UserModel->id;
 
-        $carts = request()->UserModel->messagePushes()
-            ->whereOr([
-                ['user_id', 'like', $user_id],//指定用户 推送消息
-                ['type', 'like', 0], //系统消息 所有人可见
-            ])
-            ->order('id', 'desc')->select();
-        return showSuccess($carts);
     }
 
     /**
@@ -47,21 +34,7 @@ class MessagePush extends Base
      */
     public function save(Request $request)
     {
-        $client = new JPush('185a6ab4c9324673b5007353', 'dc97d04cd9cb220be90b52c2');
-
-        $pusher = $client->push();
-        $pusher->setPlatform('all');
-        $pusher->addAllAudience();
-        $pusher->setNotificationAlert('Hello, JPush');
-        try {
-            $pusher->send();
-            echo 'success';
-        } catch (\JPush\Exceptions\JPushException $e) {
-            // try something else here
-            echo $e;
-        }
-
-//        return showSuccess($this->M->save());
+        return showSuccess($this->M->Mcreate());
     }
 
     /**

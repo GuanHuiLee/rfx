@@ -87,6 +87,10 @@ Route::group('api', function () {
     Route::get('message_push', 'admin.MessagePush/index');
     Route::post('message_push', 'admin.MessagePush/save');
 
+    //预约项目
+    Route::get('appointment', 'admin.Appointment/index');
+    Route::post('appointment', 'admin.Appointment/save');
+
 })->middleware(\app\middleware\checkUserToken::class);
 
 // Route::get('wxpay/:id','common.Payment/payByWechat');

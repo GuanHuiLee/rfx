@@ -44,9 +44,14 @@ class User extends BaseModel
         return password_hash($value,PASSWORD_DEFAULT);
     }
 
-    // 关联购物车
+    // 关联消息推送
     public function messagePushes(){
         return $this->hasMany('app\model\admin\MessagePush');
+    }
+
+    // 关联预约
+    public function appointments(){
+        return $this->hasMany('app\model\admin\Appointment');
     }
 	
 	// 验证用户名是什么格式，昵称/邮箱/手机号
