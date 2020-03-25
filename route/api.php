@@ -26,6 +26,8 @@ Route::group('api', function () {
     // 商品分类
     Route::get('category/app_category', 'admin.Category/app_category');
 
+    //预约项目
+    Route::get('project', 'admin.Project/index');
 });
 
 // 只有会员能操作

@@ -53,7 +53,7 @@ class User extends BaseModel
     public function appointments(){
         return $this->hasMany('app\model\admin\Appointment');
     }
-	
+
 	// 验证用户名是什么格式，昵称/邮箱/手机号
     public function filterLoginMethod($data){
         // 验证是否是手机号码

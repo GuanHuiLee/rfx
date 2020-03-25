@@ -5,7 +5,6 @@ namespace app\controller\admin;
 use think\Request;
 use app\controller\common\Base;
 
-use think\model\Relation;
 use app\model\admin\Goods;
 class Cart extends Base
 {

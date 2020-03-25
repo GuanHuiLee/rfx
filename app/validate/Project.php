@@ -2,9 +2,8 @@
 
 namespace app\validate;
 
-use think\Validate;
 
-class Appointment extends BaseValidate
+class Project extends BaseValidate
 {
     /**
      * 定义验证规则
@@ -14,10 +13,7 @@ class Appointment extends BaseValidate
      */
     protected $rule = [
         'id' => 'integer|>:0|isExist',
-        'project_id|项目' => 'require',
-        'name|姓名' => 'require',
-        'phone|手机号' => 'require',
-        'car_number|车牌号' => 'require',
+        'name|项目名称' => 'require',
     ];
 
     /**
@@ -29,10 +25,9 @@ class Appointment extends BaseValidate
     protected $message = [];
 
     protected $scene = [
-        'update' => ['id', 'car_number', 'name', 'project_id', 'phone'],
-        'save' => ['car_number', 'name', 'project_id', 'phone'],
+        'update' => ['id', 'name'],
+        'save' => ['name'],
         'delete' => ['id'],
-        'read' => ['id'],
-        'updateState' => ['id']
+        'read' => ['id']
     ];
 }

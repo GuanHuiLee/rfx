@@ -2,10 +2,13 @@
 
 namespace app\controller\admin;
 
+use app\controller\common\Base;
 use think\Request;
 
-class Appointment
+class Appointment extends Base
 {
+    protected $excludeValidateCheck = ['index', 'get'];
+
     /**
      * 显示资源列表
      *
@@ -13,7 +16,25 @@ class Appointment
      */
     public function index()
     {
+        $appointment = request()->UserModel->appointments()->projects()->select();
+        return showSuccess($appointment);
+    }
 
+    public function get()
+    {
+        $param = request()->param();
+        $limit = intval(getValByKey('limit', $param, 10));
+        $model = $this->M;
+        $totalCount = $model->count();
+        $list = $model->page($param['page'], $limit)
+            ->with(['project'])
+            ->order(['id' => 'desc'])
+            ->select();
+
+        return showSuccess([
+            'list' => $list,
+            'totalCount' => $totalCount,
+        ]);
     }
 
     /**
@@ -34,7 +55,7 @@ class Appointment
      */
     public function save(Request $request)
     {
-        return showSuccess($this->M->Mcreate());
+        return showSuccess($this->M->addAppointment());
     }
 
     /**
@@ -68,7 +89,7 @@ class Appointment
      */
     public function update(Request $request, $id)
     {
-        //
+        return showSuccess($this->M->Mupdate());
     }
 
     /**
@@ -79,6 +100,14 @@ class Appointment
      */
     public function delete($id)
     {
-        //
+        return showSuccess($this->M->Mdelete());
+    }
+
+    // 修改服务状态
+    public function updateState()
+    {
+        $request = request();
+
+        return showSuccess($request->Model->save(['state' => $request->param('state')]));
     }
 }
