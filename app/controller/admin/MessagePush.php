@@ -1,15 +1,15 @@
 <?php
 
 namespace app\controller\admin;
-require 'vendor/autoload.php';
 
 use app\controller\common\Base;
+use getui\GeTui;
 use think\Request;
-use JPush\Client as JPush;
+
 
 class MessagePush extends Base
 {
-    protected $excludeValidateCheck = ['save'];
+    protected $excludeValidateCheck = ['index', 'get'];
 
     /**
      * 显示资源列表
@@ -27,6 +27,22 @@ class MessagePush extends Base
             ])
             ->order('id', 'desc')->select();
         return showSuccess($carts);
+    }
+
+    public function get()
+    {
+        $param = request()->param();
+        $limit = intval(getValByKey('limit', $param, 10));
+        $model = $this->M;
+        $totalCount = $model->count();
+        $list = $model->page($param['page'], $limit)
+            ->order(['id' => 'desc'])
+            ->select();
+
+        return showSuccess([
+            'list' => $list,
+            'totalCount' => $totalCount,
+        ]);
     }
 
     /**
@@ -47,22 +63,20 @@ class MessagePush extends Base
      */
     public function save(Request $request)
     {
-        $client = new JPush('185a6ab4c9324673b5007353', 'dc97d04cd9cb220be90b52c2');
+        $info = new GeTui();//实例化个推类
+        $re = $this->M->Mcreate();
 
-        $pusher = $client->push();
-        $pusher->setPlatform('all');
-        $pusher->addAllAudience();
-        $pusher->setNotificationAlert('Hello, JPush');
-        try {
-            $pusher->send();
-            echo 'success';
-        } catch (\JPush\Exceptions\JPushException $e) {
-            // try something else here
-            echo $e;
+//       echo request()->UserModel->id;
+
+        if ($re->type == 0) {//群发
+            $info->pushMessageToApp($re);
+        } else {//单发
+            $info->pushMessageToSingle($re);
         }
 
-//        return showSuccess($this->M->save());
+
     }
+
 
     /**
      * 显示指定的资源

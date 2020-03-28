@@ -15,7 +15,7 @@ class MessagePush extends BaseValidate
         'title|标题' => 'require',
         'content|内容' => 'require',
         'type' => 'require|integer|in:0,1',
-        'plat' => 'require|integer|in:0,1,2'
+        'user_id' => 'integer',
     ];
 
     /**
@@ -27,10 +27,10 @@ class MessagePush extends BaseValidate
     protected $message = [];
 
     protected $scene = [
-        'update' => ['title', 'content', 'type', 'plat'],
-        'save' => ['title', 'content', 'type', 'plat'],
+        'update' => ['id', 'title', 'content', 'type'],
+        'save' => ['title', 'content', 'type'],
         'delete' => ['id'],
-        'read' => ['id']
+        'read' => ['id'],
     ];
 
 }

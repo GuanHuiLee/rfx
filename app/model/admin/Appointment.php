@@ -31,7 +31,6 @@ class Appointment extends BaseModel
         return $arr;
     }
 
-    // 加入购物车
     public function addAppointment()
     {
         $param = request()->param();

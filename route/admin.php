@@ -7,6 +7,7 @@ Route::group('admin', function () {
     // 管理员登录
     Route::post('login', 'admin.Manager/login');
     Route::get('project', 'admin.Project/index');
+    Route::post('message_push', 'admin.MessagePush/save');
 })->allowCrossDomain();
 // 验证登录
 Route::group('admin', function () {
@@ -192,9 +193,13 @@ Route::group('admin', function () {
     Route::post('project', 'admin.Project/save');
     Route::post('project/:id', 'admin.Project/update');
     Route::post('project/:id/delete', 'admin.Project/delete');
-
     Route::get('appointment/:page', 'admin.Appointment/get');
     Route::post('appointment/:id/delete', 'admin.Appointment/delete');
     Route::post('appointment/:id/state', 'admin.Appointment/updateState');
 
+    //通知
+    Route::get('message/:page', 'admin.MessagePush/get');
+    Route::post('message', 'admin.MessagePush/save');
+
+    //消息推送
 })->middleware(\app\middleware\checkManagerToken::class)->allowCrossDomain();

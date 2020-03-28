@@ -3,6 +3,7 @@
 namespace app\controller\admin;
 
 use app\controller\common\Base;
+use getui\GeTui;
 use think\Request;
 
 class Appointment extends Base
@@ -16,7 +17,7 @@ class Appointment extends Base
      */
     public function index()
     {
-        $appointment = request()->UserModel->appointments()->projects()->select();
+        $appointment = request()->UserModel->appointments()->with(['project'])->select();
         return showSuccess($appointment);
     }
 
@@ -107,7 +108,19 @@ class Appointment extends Base
     public function updateState()
     {
         $request = request();
+        $info = new GeTui();//实例化个推类
+        $re = new \app\model\admin\MessagePush();
 
+        $name = $request->Model->name;
+        $project = $request->Model->project->name;
+        $create_time = $request->Model->create_time;
+        $re->save([
+            'title' => '订单完成',
+            'content' => '您' . '提交的预约订单项目-' . $project . '-已完成',
+            'type' => 1,
+        ]);
+
+        $info->pushMessageToApp($re);
         return showSuccess($request->Model->save(['state' => $request->param('state')]));
     }
 }

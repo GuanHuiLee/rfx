@@ -87,7 +87,6 @@ Route::group('api', function () {
 
     //消息推送
     Route::get('message_push', 'admin.MessagePush/index');
-    Route::post('message_push', 'admin.MessagePush/save');
 
     //预约项目
     Route::get('appointment', 'admin.Appointment/index');
