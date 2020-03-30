@@ -6,6 +6,8 @@ use think\facade\Route;
 Route::group('api', function () {
     // 会员登录退出
     Route::post('login', 'admin.User/login');
+    // 会员登录退出
+    Route::post('register', 'admin.User/register');
 
     // app首页分类和数据
     Route::get('index_category/data', 'web.AppIndexCategory/index');
@@ -86,7 +88,7 @@ Route::group('api', function () {
     Route::get('payment/:id/wxmppay/:code', 'common.Payment/payByWechatMp');
 
     //消息推送
-    Route::get('message_push', 'admin.MessagePush/index');
+    Route::get('message', 'admin.MessagePush/index');
 
     //预约项目
     Route::get('appointment', 'admin.Appointment/index');

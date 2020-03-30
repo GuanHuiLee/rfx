@@ -36,7 +36,8 @@ class User extends BaseValidate
         'save'=>['username','password','nickname','phone','email','user_level_id','avatar'],
         'update'=>['id','username','password','nickname','phone','email','user_level_id','avatar'],
         'delete'=>['id'],
-        'updateStatus'=>['id','status']
+        'updateStatus'=>['id','status'],
+        'register'=>['username','password']
     ];
 
     // 登录场景
