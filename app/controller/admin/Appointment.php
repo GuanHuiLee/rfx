@@ -114,13 +114,16 @@ class Appointment extends Base
         $name = $request->Model->name;
         $project = $request->Model->project->name;
         $create_time = $request->Model->create_time;
+        echo request()->UserModel->id;
+
         $re->save([
             'title' => '订单完成',
             'content' => '您' . '提交的预约订单项目-' . $project . '-已完成',
             'type' => 1,
+            'user_id' =>$request->Model->user_id
         ]);
 
-        $info->pushMessageToApp($re);
+        $info->pushMessageToSingle($re);
         return showSuccess($request->Model->save(['state' => $request->param('state')]));
     }
 }

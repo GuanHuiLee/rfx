@@ -81,6 +81,7 @@ class User extends Base
         $param = request()->param();
         $pw = getValByKey('password', $param, '');
         $pw2 = getValByKey('password2', $param, '');
+        $nickname = getValByKey('nickname', $param, '');
 
         $this->M->checkUnique('username', '用户名');
         if (!array_key_exists('password', $param)) {
@@ -151,6 +152,9 @@ class User extends Base
     // 登录
     public function login(Request $request)
     {
+        $param = request()->param();
+        request()->UserModel->save($param);//保存cid
+
         $user = cms_login([
             'data' => $request->UserModel,
             'tag' => 'user'
@@ -162,6 +166,11 @@ class User extends Base
     // 退出
     public function logout(Request $request)
     {
+        $param = request()->param();
+        $user = request()->UserModel;
+        $user->cid = '';
+        $user->save($param);//清空cid,否则会出现一台手机换账号之后推送出问题
+
         return showSuccess(cms_logout([
             'tag' => 'user',
             'token' => $request->header('token')
