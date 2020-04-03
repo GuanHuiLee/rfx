@@ -33,7 +33,7 @@ class MessagePush extends Base
     {
         $param = request()->param();
         $limit = intval(getValByKey('limit', $param, 10));
-        $model = $this->M;
+        $model = $this->M->where('type', '0');
         $totalCount = $model->count();
         $list = $model->page($param['page'], $limit)
             ->order(['id' => 'desc'])
@@ -65,8 +65,6 @@ class MessagePush extends Base
     {
         $info = new GeTui();//实例化个推类
         $re = $this->M->Mcreate();
-
-//       echo request()->UserModel->id;
 
         if ($re->type == 0) {//群发
             $info->pushMessageToApp($re);
@@ -120,6 +118,6 @@ class MessagePush extends Base
      */
     public function delete($id)
     {
-        //
+        return showSuccess($this->M->Mdelete());
     }
 }

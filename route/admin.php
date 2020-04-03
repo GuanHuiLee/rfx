@@ -200,6 +200,7 @@ Route::group('admin', function () {
     //通知
     Route::get('message/:page', 'admin.MessagePush/get');
     Route::post('message', 'admin.MessagePush/save');
+    Route::post('message/:id/delete', 'admin.MessagePush/delete');
 
     //消息推送
 })->middleware(\app\middleware\checkManagerToken::class)->allowCrossDomain();

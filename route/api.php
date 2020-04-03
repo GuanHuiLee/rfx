@@ -36,6 +36,8 @@ Route::group('api', function () {
 Route::group('api', function () {
     // 退出登录
     Route::post('logout', 'admin.User/logout');
+//获取会员等级
+    Route::get('level', 'admin.User/getLevel');
 
     // 会员收货地址
     Route::get('useraddresses/:page', 'web.UserAddresses/index');

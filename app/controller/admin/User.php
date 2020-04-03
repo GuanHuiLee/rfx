@@ -8,7 +8,7 @@ use think\Request;
 class User extends Base
 {
     // 不需要验证
-    protected $excludeValidateCheck = ['logout'];
+    protected $excludeValidateCheck = ['logout', 'getLevel'];
     // 定义自动实例化模型
     protected $ModelPath = 'common\\User';
 
@@ -91,6 +91,12 @@ class User extends Base
             return ApiException('两次密码不一致,请重新输入');
         }
         return showSuccess($this->M->Mcreate());
+    }
+
+    //获取会员等级
+    public function getLevel()
+    {
+        return showSuccess(request()->UserModel->UserLevel);
     }
 
     /**
